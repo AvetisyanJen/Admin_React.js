@@ -1,19 +1,9 @@
-// import React from 'react'
-
-// export default function AdminPage() {
-//   return (
-//     <div>AdminPage</div>
-//   )
-// }
 import { Link, Outlet, useNavigate } from "react-router-dom" 
-
-
-// import "./Admin.css";
 import { MenuItem, MenuList, Box, Button } from "@mui/material";
 
 
 function AdminPage() {
-
+/////menyu admin
   const navigate = useNavigate();
 
   function logOut(){

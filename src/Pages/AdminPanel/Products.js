@@ -12,49 +12,10 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import useDelet from "../../Hooks/DeletProduct";
 
 function Products() {
-  const [products, setProducts] = useState([]);
-  const [reference, setReference] = useState(false);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    fetch("http://localhost:5000/prod")
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(res);
-        setProducts(res);
-      });
-  }, [reference]);
-
-  const deleteProduct = async (id) => {
-  const token = localStorage.getItem('token');
-   
-    try {
-      const response = await fetch(
-        `http://localhost:5000/prod/delete`,
-        {
-          method: "DELETE",
-          body: JSON.stringify({
-            id,
-          }),
-          headers: {
-            "Content-type": "application/json; charset=UTF-8",
-            "Authorization": `Bearer ${token}`
-          },
-        }
-      );
-      if(response.status === 401 || response.status === 403){
-        console.log(response.status);
-        navigate('/');
-      }
-      const data = await response.json();
-      setReference(true);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
+  const {products,deleteProduct}=useDelet()
   return (
     <div>
       <Container sx={{ display: "flex", flexDirection: "column" }}>
