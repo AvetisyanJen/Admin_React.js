@@ -28,7 +28,7 @@ function Products() {
           }}
         >
           <Button variant="contained">
-            <Link to="/createProduct">New Product</Link>
+            <Link to="addProduct">New Product</Link>
           </Button>
         </Stack>
         <TableContainer
@@ -58,7 +58,7 @@ function Products() {
                   </TableCell>
                   <TableCell align="center">{product.price}</TableCell>
                   <TableCell align="center">{product.description}</TableCell>
-                  <TableCell align="center">{product.Category.name}</TableCell>
+                   <TableCell align="center">{product.Category ? product.Category.name : ''}</TableCell> 
                   
                   <TableCell align="center">
                     <Link to={`/updateProduct/${product.id}`}>

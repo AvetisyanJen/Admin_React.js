@@ -39,7 +39,7 @@ export default function useDelet() {
             }
             const data = await response.json();
             console.log(data);
-            setReference(true);
+            setReference(!reference);
           } catch (err) {
             console.log(err);
           }

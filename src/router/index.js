@@ -8,6 +8,8 @@ import AdminPage from "../Pages/AdminPanel/AdminPage.js";
 import AddCategory from "../Pages/AdminPanel/AddCategory.js";
 import Products from "../Pages/AdminPanel/Products.js";
 import ProtectedRoute from "./privat.js";
+import CreateProduct from "../Pages/AdminPanel/createProduct.js";
+import Categories from "../Pages/AdminPanel/Categories.js";
 
 
 function Router() {
@@ -29,6 +31,8 @@ function Router() {
             <Route path="adminPage" element={<ProtectedRoute><AdminPage /></ProtectedRoute>}>
               <Route path="addCategory" element={<ProtectedRoute><AddCategory /></ProtectedRoute>}/>
               <Route path="products" element={<ProtectedRoute><Products /></ProtectedRoute>}/>
+              <Route path="products/addProduct" element={<ProtectedRoute><CreateProduct /></ProtectedRoute>}/>
+              <Route path="categories" element={<ProtectedRoute><Categories /></ProtectedRoute>}/>
             </Route>
 
           </Route>
