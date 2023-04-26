@@ -4,7 +4,7 @@ import Paper from "@mui/material/Paper";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 
-import { Typography, Box, TextField, IconButton, Snackbar, Button, FormHelperText } from '@mui/material';
+import { Typography, Box, TextField, IconButton, Snackbar, Button } from '@mui/material';
 
 import Alert from '@mui/material/Alert';
 
@@ -28,6 +28,8 @@ const Categories = () => {
   const [error, setError] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [isChange,setIsChange]=useState(false)
+
  
 
 
@@ -68,17 +70,27 @@ const Categories = () => {
       })
       .catch((err) => console.log(err));
   };
+ 
+  
+  const handleUpdate = async(e) => {
 
-  const handleUpdate = () => {
-    fetch("http://localhost:5000/cat/update", {
-      method: "PUT",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data)
 
-      })
-      .catch((err) => console.log(err));
+    // fetch("http://localhost:5000/cat/update", {
+    //   method: "PUT",
+    //   headers: {
+    //     "Content-type": "application/json; charset=UTF-8",
+    //     "Authorization": `Bearer ${token}`
+    //   },
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log(data)
+    //     setSnackbarOpen(true)
+       
+    //     setSnackbarMessage(data.message)
+
+    //   })
+    //   .catch((err) => console.log(err));
   };
 
   const createCategory = async (e) => {
@@ -147,8 +159,13 @@ const Categories = () => {
 
       {categories.map((category) => (
         <CategoryContainer key={category.id}>
-          <Typography variant="body1"
-          >{category.name}</Typography>
+          {/* <Typography variant="body1">  */}
+          <TextField
+           value={category.name}
+           onChange={(e)=>setName(e.target.value)}
+          //  InputProps={{ readOnly: isChange}}
+        />
+      
           <div>
             <IconButton aria-label="delete" onClick={() => handleDelete(category.id)}>
               <DeleteIcon />
