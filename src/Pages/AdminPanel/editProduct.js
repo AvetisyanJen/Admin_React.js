@@ -1,5 +1,6 @@
+
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -8,8 +9,13 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { Typography } from "@mui/material";
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 
-function EditProduct() {
+
+
+export default function UpdateProduct() {
+
     const [categories, setCategories] = useState([]);
     const [product, setProduct] = useState({
         name:"",
@@ -18,8 +24,10 @@ function EditProduct() {
         description:""
     });
 
-    
-    const { id } = useParams();
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+   
+    const {id } = useParams();
     console.log(id)
     useEffect(() => {
         fetch(`http://localhost:5000/prod/${id}`)
@@ -40,25 +48,33 @@ function EditProduct() {
             });
     }, []);
 
-      const updateProduct = async ()=> {
+      const updateProduct = async (id) => {
         const token = localStorage.getItem("token");
         try {
           const response = await fetch(
-            `http://localhost:5000/prod/updateProduct`,
+            `http://localhost:5000/prod/update/${id}`,
             {
               method: "PUT",
               body: JSON.stringify(product),
               headers: {
                 "Content-type": "application/json; charset=UTF-8",
-                "Authorization": `Bearer ${token}`
-              },
+                "Authorization":`Bearer ${token}`
+            },
             }
           );
-       
+          
+          if (response.ok) {
+            setSnackbarOpen(true)
+            setSnackbarMessage("Product Updated")
+          }else{
+            setSnackbarMessage("krkin porceq")
+          }
         } catch (err) {
           console.log(err);
         }
       };
+
+    console.log(product);
 
     return (
         <div>
@@ -71,9 +87,9 @@ function EditProduct() {
                 Edit Product
             </Typography>
             <Typography component='p' color="blue" sx={{ height: '10px', textAlign: 'center', fontSize: '15px' }}>
-            
+                {/* {err ? err : updated} */}
             </Typography>
-        
+            {/* {product.name && */}
                 <Box
                     component="form"
                     sx={{
@@ -102,7 +118,7 @@ function EditProduct() {
                             Category
                         </InputLabel>
                         <Select
-                            labelId="categoryId"
+                            labelId="categoriId"
                             id="category"
                             value={product.categoriId}
                             label="Category"
@@ -137,15 +153,24 @@ function EditProduct() {
                     />
 
                     <Button variant="outlined"
-               onClick={()=>updateProduct}
+                       onClick={()=>updateProduct (product.id)}
                     >
                         Update
                     </Button>
+
+                    <Snackbar open={snackbarOpen}
+                      sx={{
+                            marginLeft: "65rem",
+                            marginBottom: "40rem"
+                          }}
+                          autoHideDuration={5000} onClose={() => setSnackbarOpen(false)}>
+        <Alert onClose={() => setSnackbarOpen(false)} severity="success" sx={{ width: '100%' }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
                 </Box>
-       
+            
 
         </div>
     );
 }
-
-export default EditProduct;
