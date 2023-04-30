@@ -193,8 +193,8 @@ const Categories = () => {
             InputProps={{
                 readOnly: !active || activeCategory !== category.id,
             }}
-             helperText={ activeCategory ===category.id && "Edit Category" || activeId===category.id && notremove}
-   
+            helperText={ (activeCategory === category.id && "Edit Category") || (activeId === category.id && notremove) }
+
         />
 
         <div>

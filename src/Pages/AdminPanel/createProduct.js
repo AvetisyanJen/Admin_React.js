@@ -8,6 +8,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Input } from "@mui/material";
 
 function CreateProduct() {
   const [product, setProduct] = useState({
@@ -16,33 +17,41 @@ function CreateProduct() {
     price: "",
     description: "",
   });
+  const [files,setFiles]=useState([])
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
 console.log(product)
 const token =localStorage.getItem("token")
-  async function submitCreateProduct(e) {
-     e.preventDefault();
-    
-    try {
-      const response = await fetch("http://localhost:5000/prod/post", {
-        method: "POST",
-        body: JSON.stringify(product),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if(response.status === 401 || response.status === 403){
-        console.log(response.status);
-        navigate('/');
-      }
-      const data = await response.json();
-      console.log(data, "data");
-    } catch (err) {
-      console.log(err);
-    }
-    setProduct({ name:'',categoriId:'',price:'',description:''})
+async function submitCreateProduct(e) {
+  e.preventDefault();
+  const form = new FormData();
+  form.append("name", product.name);
+  form.append("categoriId", product.categoriId);
+  form.append("price", product.price);
+  form.append("description", product.description);
+  for (let i = 0; i < files.length; i++) {
+    form.append("photo", files[i]);
   }
+  try {
+    const response = await fetch("http://localhost:5000/prod/post", {
+      method: "POST",
+      body: form,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (response.status === 401 || response.status === 403) {
+      console.log(response.status);
+      navigate("/");
+    }
+    const data = await response.json();
+    console.log(data, "data");
+  } catch (err) {
+    console.log(err);
+  }
+  setProduct({ name: "", categoriId: "", price: "", description: "" });
+}
+
 
   useEffect(() => {
     fetch("http://localhost:5000/cat/categories")
@@ -107,7 +116,16 @@ const token =localStorage.getItem("token")
           value={product.description}
           onChange={(e) =>setProduct({...product, description: e.target.value})}
         />
-        
+        <Input
+type="file"
+name="photo"
+inputProps={{ multiple: true }}
+  className="form-control"
+  onChange={(e) => {
+    setFiles(e.target.files) 
+   
+  }}
+/>
         <Button variant="outlined" onClick={submitCreateProduct}>
           Submit
         </Button>
@@ -117,3 +135,4 @@ const token =localStorage.getItem("token")
 }
 
 export default CreateProduct;
+
