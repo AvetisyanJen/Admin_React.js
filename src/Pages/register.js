@@ -3,14 +3,14 @@ import { useState } from 'react';
 function Register() {
   const [user, setUser] = useState({
     email: "",
-    username: "",
+    userName: "",
     password: ""
   });
 
 
   const handleRegister = async () => {
     try {
-      const response = await fetch("http://localhost:5000/user/register", {
+      const response = await fetch("http://localhost:3333/user/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -30,7 +30,7 @@ function Register() {
       <form onSubmit={(e) => {
         setUser({
           email: "",
-          username: "",
+          userName: "",
           password: ""
         })
         e.preventDefault()
@@ -49,7 +49,7 @@ function Register() {
           <input
             type="text"
             value={user.username}
-            onChange={(e) => setUser({ ...user, username: e.target.value })}
+            onChange={(e) => setUser({ ...user, userName: e.target.value })}
           />
         </label>
         <br />

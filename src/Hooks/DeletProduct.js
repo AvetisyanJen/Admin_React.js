@@ -8,7 +8,7 @@ export default function useDelet() {
   const [reference, setReference] = useState(false);
   const navigate=useNavigate()
   useEffect(() => {
-    fetch("http://localhost:5000/prod")
+    fetch("http://localhost:3333/prod/products")
       .then((res) => res.json())
       .then((res) => {
         console.log(res);
@@ -21,7 +21,7 @@ export default function useDelet() {
           console.log(token);
           try {
             const response = await fetch(
-              "http://localhost:5000/prod/delete",
+              `http://localhost:3333/prod/delete/${id}`,
               {
                 method: "DELETE",
                 body: JSON.stringify({

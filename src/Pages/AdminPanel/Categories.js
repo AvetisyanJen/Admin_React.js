@@ -43,7 +43,7 @@ const Categories = () => {
     const token = localStorage.getItem("token")
 
     useEffect(() => {
-        fetch("http://localhost:5000/cat/categories", {
+        fetch("http://localhost:3333/category/get", {
             headers: {
                 "Content-type": "application/json; charset=UTF-8",
                 "Authorization": `Bearer ${token}`
@@ -55,7 +55,7 @@ const Categories = () => {
     }, [remove, add, update]);
 
     const handleDelete = (id) => {
-        fetch(`http://localhost:5000/cat/delete`, {
+        fetch(`http://localhost:3333/category/delete/${id}`, {
             method: "DELETE",
             body: JSON.stringify({
                 id,
@@ -85,7 +85,7 @@ const Categories = () => {
     const changeCategory = async (id) => {
 
 
-        fetch(`http://localhost:5000/cat/update`, {
+        fetch(`http://localhost:3333/category/update`, {
           method: "PUT",
           headers: {
             "Content-type": "application/json; charset=UTF-8",
@@ -111,7 +111,7 @@ const Categories = () => {
                 setError(true)
                 return
             }
-            const response = await fetch('http://localhost:5000/cat/new', {
+            const response = await fetch('http://localhost:3333/category/create', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

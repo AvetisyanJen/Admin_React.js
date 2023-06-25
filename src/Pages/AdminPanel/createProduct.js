@@ -33,7 +33,7 @@ async function submitCreateProduct(e) {
     form.append("photo", files[i]);
   }
   try {
-    const response = await fetch("http://localhost:5000/prod/post", {
+    const response = await fetch("http://localhost:3333/prod/create", {
       method: "POST",
       body: form,
       headers: {
@@ -54,7 +54,7 @@ async function submitCreateProduct(e) {
 
 
   useEffect(() => {
-    fetch("http://localhost:5000/cat/categories")
+    fetch("http://localhost:3333/category/get")
       .then((res) => res.json())
       .then((res) => {
         console.log(res);

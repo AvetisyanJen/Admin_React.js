@@ -54,7 +54,7 @@ function Products() {
                 >
                   <TableCell align="center">{product.name}</TableCell>
                   <TableCell align="center">
-                    <img  src={"http://localhost:5000/images/"+product?.Photos[0]?.url} width="80px" />
+                    <img  src={"http://localhost:3333/images/"+product?.Photos[0]?.url} width="80px" />
                   </TableCell>
                   <TableCell align="center">{product.price}</TableCell>
                   <TableCell align="center">{product.description}</TableCell>
